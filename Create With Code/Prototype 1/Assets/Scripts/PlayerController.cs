@@ -6,7 +6,16 @@ public class PlayerController : MonoBehaviour
 {
 
 
-    public float speed = 100f;
+    public float speed = 20f;
+    public float turnSpeed;
+
+    public float horizontalInput;
+    public float loopHor = 1;
+    public float horAccel = 0.025f;
+
+    public float verticalInput;
+    public float loop = 1;
+    public float accel = 0.025f;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,45 +26,75 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         // Move vehicle forward
+        horizontalInput = Input.GetAxis("Horizontal");
+        verticalInput = Input.GetAxis("Vertical");
 
-        //transform.Translate(Vector3.forward * Time.deltaTime * 20);
+        transform.Translate(Vector3.forward * Time.deltaTime * speed * verticalInput * loop);
+        transform.Rotate(Vector3.up, Time.deltaTime * turnSpeed * horizontalInput * horAccel);
 
-        if (Input.GetKey("up"))
+        if(verticalInput > 0)
         {
-            transform.Translate(Vector3.forward * Time.deltaTime * speed);
+            loop += accel;
         }
-
-        if (Input.GetKey("down"))
+        else
         {
-            transform.Translate(Vector3.forward * Time.deltaTime * -speed);
-        }
-        if (Input.GetKey("left"))
-        {
-            transform.Rotate(0, -1, 0);
-        }
-
-        if (Input.GetKey("right"))
-        {
-            transform.Rotate(0, 1, 0);
+            loop -= accel;
+            if(loop < 1)
+            {
+                loop = 1;
+            }
         }
 
-        if (Input.GetKey("a"))
+        if (horizontalInput > 0)
         {
-            transform.Rotate(0, 0, 5);
+            loopHor += horAccel;
         }
-        if (Input.GetKey("d"))
+        else
         {
-            transform.Rotate(0, 0, -5);
+            loopHor -= horAccel;
+            if (loopHor < 1)
+            {
+                loopHor = 1;
+            }
         }
 
-        if (Input.GetKey("w"))
-        {
-            transform.Rotate(5, 0, 0);
-        }
-        if (Input.GetKey("s"))
-        {
-            transform.Rotate(-5, 0, 0);
-        }
+
+        //if (Input.GetKey("up"))
+        //{
+        //    transform.Translate(Vector3.forward * Time.deltaTime * speed);
+        //}
+
+        //if (Input.GetKey("down"))
+        //{
+        //    transform.Translate(Vector3.forward * Time.deltaTime * -speed);
+        //}
+        //if (Input.GetKey("left"))
+        //{
+        //    transform.Rotate(0, -1, 0);
+        //}
+
+        //if (Input.GetKey("right"))
+        //{
+        //    transform.Rotate(0, 1, 0);
+        //}
+
+        //if (Input.GetKey("a"))
+        //{
+        //    transform.Rotate(0, 0, 5);
+        //}
+        //if (Input.GetKey("d"))
+        //{
+        //    transform.Rotate(0, 0, -5);
+        //}
+
+        //if (Input.GetKey("w"))
+        //{
+        //    transform.Rotate(5, 0, 0);
+        //}
+        //if (Input.GetKey("s"))
+        //{
+        //    transform.Rotate(-5, 0, 0);
+        //}
 
     }
 }
