@@ -10,8 +10,9 @@ public class PlayerController : MonoBehaviour
     public float turnSpeed;
 
     public float horizontalInput;
-    public float loopHor = 1;
-    public float horAccel = 0.025f;
+    public float loopHor = 0;
+    public float accelHor = 1;
+    public float accelRate;
 
     public float verticalInput;
     public float loop = 1;
@@ -30,7 +31,7 @@ public class PlayerController : MonoBehaviour
         verticalInput = Input.GetAxis("Vertical");
 
         transform.Translate(Vector3.forward * Time.deltaTime * speed * verticalInput * loop);
-        transform.Rotate(Vector3.up, Time.deltaTime * turnSpeed * horizontalInput * horAccel);
+        transform.Rotate(Vector3.up, Time.deltaTime * turnSpeed * horizontalInput* accelHor);
 
         if(verticalInput > 0)
         {
@@ -45,18 +46,21 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (horizontalInput > 0)
+        if(horizontalInput < 0 || horizontalInput > 0)
         {
-            loopHor += horAccel;
+            loopHor++;
         }
         else
         {
-            loopHor -= horAccel;
-            if (loopHor < 1)
-            {
-                loopHor = 1;
-            }
+            loopHor = 0;
+            accelHor = 1;
         }
+
+        accelHor += loop / accelRate;
+
+
+        //transform.Translate(0, accelHor, 0);
+
 
 
         //if (Input.GetKey("up"))
