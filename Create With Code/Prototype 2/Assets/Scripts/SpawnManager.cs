@@ -6,7 +6,7 @@ public class SpawnManager : MonoBehaviour
 {
     public GameObject[] animalPrefabs;
     private float spawnRangeX = 17;
-    private float spawnPosZ = 20;
+    private float spawnPosZ = 30;
     private float startDelay = 2;
     private float spawnInterval = 1.5f;
     // Update is called once per frame
